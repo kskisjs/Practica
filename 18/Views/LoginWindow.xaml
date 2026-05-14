@@ -1,0 +1,69 @@
+<Window x:Class="CRMApp.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CRM — Вход" Width="550" Height="750"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#1E1E2E">
+
+    <Grid>
+        <Border CornerRadius="16" Background="#2A2A3E" Margin="30"
+                Effect="{DynamicResource CardShadow}">
+            <StackPanel Margin="40,36" VerticalAlignment="Center">
+
+                <!-- Лого / заголовок -->
+                <TextBlock Text="🏢 CRM Система" FontSize="24" FontWeight="Bold"
+                           Foreground="#7C8CF8" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                <TextBlock Text="{Binding FormTitle}" FontSize="14"
+                           Foreground="#8A8AAA" HorizontalAlignment="Center" Margin="0,0,0,28"/>
+
+                <!-- Логин -->
+                <TextBlock Text="Логин" Foreground="#CCCCDD" FontSize="12" Margin="0,0,0,4"/>
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{DynamicResource InputTextBoxStyle}" Margin="0,0,0,14"/>
+
+                <!-- ФИО (только регистрация) -->
+                <StackPanel Visibility="{Binding IsRegisterMode, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="Полное имя" Foreground="#CCCCDD" FontSize="12" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{DynamicResource InputTextBoxStyle}" Margin="0,0,0,14"/>
+                </StackPanel>
+
+                <!-- Пароль -->
+                <TextBlock Text="Пароль" Foreground="#CCCCDD" FontSize="12" Margin="0,0,0,4"/>
+                <PasswordBox x:Name="PasswordBox" Style="{DynamicResource InputPasswordBoxStyle}" Margin="0,0,0,20"/>
+
+                <!-- Ошибка -->
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="#FF6B6B"
+                           FontSize="12" TextWrapping="Wrap" Margin="0,0,0,16"
+                           Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
+
+                <!-- Кнопка входа/регистрации -->
+                <Button Content="Войти" x:Name="LoginBtn"
+                        Style="{DynamicResource PrimaryButtonStyle}"
+                        Click="OnLoginClick"
+                        Visibility="{Binding IsRegisterMode, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                        Height="42" Margin="0,0,0,10"/>
+
+                <Button Content="Зарегистрироваться" x:Name="RegBtn"
+                        Style="{DynamicResource PrimaryButtonStyle}"
+                        Click="OnRegisterClick"
+                        Visibility="{Binding IsRegisterMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Height="42" Margin="0,0,0,10"/>
+
+                <!-- Переключение режима -->
+                <Button Command="{Binding ToggleModeCommand}"
+                        Style="{DynamicResource LinkButtonStyle}"
+                        HorizontalAlignment="Center">
+                    <Button.Content>
+                        <TextBlock>
+                            <Run Text="{Binding IsRegisterMode, Converter={StaticResource BoolToRegisterLinkConverter}}"/>
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+
+              
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
