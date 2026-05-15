@@ -1,0 +1,50 @@
+@model IEnumerable<TodoListApp.Models.TodoItem>
+@{
+    ViewData["Title"] = "Список дел";
+    var filter = ViewBag.Filter as string ?? "all";
+}
+
+<div class="todo-header">
+    <h1>📝 Список дел</h1>
+    <div class="stats">
+        <span class="badge badge-total">Всего: @ViewBag.TotalCount</span>
+        <span class="badge badge-active">Активных: @ViewBag.ActiveCount</span>
+        <span class="badge badge-done">Выполнено: @ViewBag.DoneCount</span>
+    </div>
+</div>
+
+<!-- Фильтрация по статусу -->
+<div class="filter-bar">
+    <a href="/Todo?filter=all"       class="filter-btn @(filter == "all"       ? "active" : "")">Все</a>
+    <a href="/Todo?filter=active"    class="filter-btn @(filter == "active"    ? "active" : "")">Активные</a>
+    <a href="/Todo?filter=completed" class="filter-btn @(filter == "completed" ? "active" : "")">Выполненные</a>
+</div>
+
+<!-- Кнопка добавить -->
+<div class="add-btn-wrapper">
+    <a href="/Todo/Add" class="btn-add">+ Добавить задачу</a>
+</div>
+
+<!-- Список задач -->
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <p>Нет задач в этой категории.</p>
+    </div>
+}
+else
+{
+    <ul class="todo-list">
+        @foreach (var item in Model)
+        {
+            <li class="todo-item @(item.IsCompleted ? "completed" : "")">
+                <a href="/Todo/Complete/@item.Id" class="toggle-btn" title="Переключить статус">
+                    @(item.IsCompleted ? "✅" : "⬜")
+                </a>
+                <span class="todo-title">@item.Title</span>
+                <a href="/Todo/Delete/@item.Id" class="delete-btn"
+                   onclick="return confirm('Удалить задачу?')">🗑</a>
+            </li>
+        }
+    </ul>
+}

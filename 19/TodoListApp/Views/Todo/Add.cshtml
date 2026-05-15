@@ -1,0 +1,23 @@
+@model TodoListApp.Models.TodoItem
+@{
+    ViewData["Title"] = "Добавить задачу";
+}
+
+<div class="form-wrapper">
+    <h2>➕ Новая задача</h2>
+
+    <form asp-action="Add" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label asp-for="Title">Название задачи</label>
+            <input asp-for="Title" class="form-input" placeholder="Например: Купить молоко" autofocus />
+            <span asp-validation-for="Title" class="validation-error"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Добавить</button>
+            <a href="/Todo" class="btn-cancel">Отмена</a>
+        </div>
+    </form>
+</div>

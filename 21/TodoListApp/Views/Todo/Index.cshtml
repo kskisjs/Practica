@@ -1,0 +1,82 @@
+@model IEnumerable<TodoListApp.Models.TodoItem>
+
+<div class="todo-header">
+
+    <h1>📝 Список дел</h1>
+
+    <div class="stats">
+
+        <span class="badge badge-total">
+            Всего: @Model.Count()
+        </span>
+
+        <span class="badge badge-active">
+            Активных: @Model.Count(x => !x.IsCompleted)
+        </span>
+
+        <span class="badge badge-done">
+            Выполнено: @Model.Count(x => x.IsCompleted)
+        </span>
+
+    </div>
+
+</div>
+
+<div class="add-btn-wrapper">
+
+    <a asp-action="Create" class="btn-add">
+        + Добавить задачу
+    </a>
+
+</div>
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        Нет задач
+    </div>
+}
+else
+{
+    <ul class="todo-list">
+
+        @foreach (var item in Model)
+        {
+            <li class="todo-item @(item.IsCompleted ? "completed" : "")">
+
+                <a asp-action="ToggleComplete"
+                   asp-route-id="@item.Id"
+                   class="toggle-btn">
+
+                    @(item.IsCompleted ? "✅" : "⬜")
+
+                </a>
+
+                <div class="todo-info">
+
+                    <span class="todo-title">
+                        @item.Title
+                    </span>
+
+                    <span class="todo-date">
+
+                        📅
+                        @item.Deadline.ToShortDateString()
+
+                    </span>
+
+                </div>
+
+                <a asp-action="Delete"
+                   asp-route-id="@item.Id"
+                   class="delete-btn">
+
+                    🗑
+
+                </a>
+
+            </li>
+        }
+
+    </ul>
+}

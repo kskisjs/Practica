@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] – TodoListApp</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: #4f46e5;
+            padding: 14px 32px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: .5px;
+        }
+
+        nav a { color: white; text-decoration: none; }
+
+        main {
+            max-width: 680px;
+            margin: 40px auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        .todo-header { margin-bottom: 20px; }
+        .todo-header h1 { font-size: 1.8rem; margin-bottom: 10px; }
+        .stats { display: flex; gap: 10px; flex-wrap: wrap; }
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: .85rem;
+            font-weight: 600;
+        }
+        .badge-total    { background: #e0e7ff; color: #3730a3; }
+        .badge-active   { background: #fef3c7; color: #92400e; }
+        .badge-done     { background: #d1fae5; color: #065f46; }
+
+        /* Filter */
+        .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+        .filter-btn {
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            background: #e5e7eb;
+            color: #374151;
+            font-size: .9rem;
+            transition: background .2s;
+        }
+        .filter-btn:hover  { background: #c7d2fe; }
+        .filter-btn.active { background: #4f46e5; color: white; }
+
+        /* Add button */
+        .add-btn-wrapper { margin-bottom: 20px; }
+        .btn-add {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #4f46e5;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background .2s;
+        }
+        .btn-add:hover { background: #4338ca; }
+
+        /* Todo list */
+        .todo-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 10px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.08);
+            gap: 12px;
+            transition: opacity .2s;
+        }
+        .todo-item.completed { opacity: .6; }
+        .todo-item.completed .todo-title { text-decoration: line-through; color: #9ca3af; }
+
+        .toggle-btn { font-size: 1.4rem; cursor: pointer; text-decoration: none; line-height: 1; }
+        .todo-title { flex: 1; font-size: 1rem; }
+        .delete-btn { font-size: 1.2rem; text-decoration: none; cursor: pointer; opacity: .5; transition: opacity .2s; }
+        .delete-btn:hover { opacity: 1; }
+
+        /* Empty */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+
+        /* Form */
+        .form-wrapper {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        }
+        .form-wrapper h2 { margin-bottom: 24px; font-size: 1.4rem; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+        .form-group label { font-weight: 600; font-size: .95rem; }
+        .form-input {
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color .2s;
+        }
+        .form-input:focus { border-color: #4f46e5; }
+        .validation-error { color: #dc2626; font-size: .85rem; }
+
+        .form-actions { display: flex; gap: 12px; }
+        .btn-submit {
+            padding: 10px 24px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s;
+        }
+        .btn-submit:hover { background: #4338ca; }
+        .btn-cancel {
+            padding: 10px 24px;
+            background: #f3f4f6;
+            color: #374151;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .btn-cancel:hover { background: #e5e7eb; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/Todo">📝 TodoListApp</a>
+    </nav>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>
